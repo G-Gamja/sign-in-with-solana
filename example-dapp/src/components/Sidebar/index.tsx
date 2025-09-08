@@ -2,7 +2,7 @@ import React from 'react';
 import { PublicKey } from '@solana/web3.js';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 import { GRAY, REACT_GRAY, PURPLE, WHITE, DARK_GRAY } from '../../constants';
 
@@ -186,6 +186,7 @@ interface Props {
   publicKey?: PublicKey;
   connectedMethods: ConnectedMethods[];
   connect: () => Promise<void>;
+  signMessage?: () => Promise<void>;
 }
 
 // =============================================================================
@@ -194,11 +195,6 @@ interface Props {
 
 const Sidebar = React.memo((props: Props) => {
   const { publicKey, connectedMethods } = props;
-  const [menuOpen, setMenuOpen] = React.useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
 
   return (
     <Main>
@@ -206,7 +202,8 @@ const Sidebar = React.memo((props: Props) => {
         <Link>
           <img src="/images/phantom-icon-purple.png" alt="Phantom" width="75" />
         </Link>
-        <WalletMultiButton />  
+        <WalletMultiButton />
+
         {publicKey ? (
           // connected
           <>
